@@ -3,6 +3,8 @@
 adb devices
 SECONDS=0
 echo "black view backup"
+adb shell getprop | grep "ro.build.bluetooth.name"
+
 drivers=$(ls /mnt/)
 
 declare -i c=0
