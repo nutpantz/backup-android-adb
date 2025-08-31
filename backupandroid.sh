@@ -1,11 +1,11 @@
 #!/bin/bash
-# Reset BASH time counter criticize ro.product.vendor_dlkm.model
+# Reset BASH time counter criticize
 adb devices
 SECONDS=0
 echo "black view backup"
 adb shell getprop | grep "ro.build.bluetooth.name"
-adb shell getprop | grep "ro.product.vendor.model
-
+adb shell getprop | grep "ro.product.vendor.model"
+adb shell settings get global device_name
 drivers=$(ls /mnt/)
 
 declare -i c=0
