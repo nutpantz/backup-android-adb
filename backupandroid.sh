@@ -4,7 +4,7 @@ adb devices
 SECONDS=0
 echo "black view backup"
 adb shell getprop | grep "ro.build.bluetooth.name"
-adb shell getprop | grep "ro.product.vendor_dlkm.model"
+adb shell getprop | grep "ro.product.vendor.model
 
 drivers=$(ls /mnt/)
 
