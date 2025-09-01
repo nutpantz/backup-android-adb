@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reset BASH time counter criticize
-adb devices
+adb devices -l
 SECONDS=0
 echo "black view backup"
 adb shell getprop | grep "ro.build.bluetooth.name"
