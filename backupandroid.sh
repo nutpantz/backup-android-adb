@@ -2,7 +2,7 @@
 # Reset BASH time counter criticize
 adb devices -l
 SECONDS=0
-echo "black view backup"
+echo "android backup look like right device???"
 adb shell getprop | grep "ro.build.bluetooth.name"
 adb shell getprop | grep "ro.product.vendor.model"
 adb shell settings get global device_name
