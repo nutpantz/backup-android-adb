@@ -3,6 +3,8 @@ clear
 adb start-server
 export PATH="$PATH:/home/user/android/platform-tools"
 echo $PATH
+#### varibiles set
+time_stamp=$(date +%Y_%m_%d)
 #######looop
 ######y or n function
 ynkey() { 
@@ -61,6 +63,9 @@ do
     fi
     c=c+1
 done
+free1=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free1" ;echo "  free. is that enough???"
+echo "${backuppath}/${cleanname}/${time_stamp}"
 echo "doing back up to $backuppath  look good?"
 
 ynkey  # begin ynkey function ask if it all looks good
@@ -68,8 +73,7 @@ ynkey  # begin ynkey function ask if it all looks good
 xxx="/storage/emulated/0/"
 ####function backup
 backup(){
-  time_stamp=$(date +%Y_%m_%d)
-  # time_stamp=$(date +%Y_%m_%d_%H_%M_%S)
+    # time_stamp=$(date +%Y_%m_%d_%H_%M_%S)
   mkdir -p "${backuppath}/${cleanname}/${time_stamp}"
   #cp -r "${1}" "${backuppath}/${time_stamp}$1"   # removed copy commmand
   adb pull "${xxx}""${1}" "${backuppath}/${cleanname}/${time_stamp}/"
@@ -80,23 +84,32 @@ backup(){
 #####################The paths to backup####################
 # backup is the function and "download" becomes ${1} varabile
 backup "Download"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "Mobilism/Mobilism-downloads"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "zonewalker-acar"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "MyLogs"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "Pictures"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "1keep"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "DCIM"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "Diary"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 backup "Documents"
-echo "done"
+free=$(df --output=avail -H $backuppath | tail -n 1)
+echo -n "$free" ;echo "  free. is that enough???"
 #backup "Documents/Maps"
 #backup "Documents/tombo25"
 #backup "Documents/apkbackup"
@@ -122,7 +135,8 @@ echo "done"
 time=$SECONDS
 #printf '%dh:%dm:%ds\n' $(($time/3600)) $(($time%3600/60)) $(($time%60))
 printf '%dh:%dm:%ds\n' $(($time/3600)) $(($time%3600/60)) $(($time%60))
-
+used=$((free1-$free2))
+echo "you used up" ; echo -n $"used" 
 read -p "all done now? (y/n) " yn
 if [[ $yn == [nN] ]]; then
         echo "ending onew"
