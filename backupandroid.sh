@@ -139,7 +139,7 @@ used=$((free1-$free2))
 echo "you used up" ; echo -n $"used" 
 read -p "all done now? (y/n) " yn
 if [[ $yn == [nN] ]]; then
-        echo "ending onew"
+        echo "ending now"
         exit 1
 fi
 echo "it really did not matter what you pressed, we are done"
