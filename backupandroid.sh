@@ -1,5 +1,4 @@
 #!/bin/bash
-# Reset BASH time counter
 clear
 adb start-server
 export PATH="$PATH:/home/user/android/platform-tools"
@@ -38,6 +37,7 @@ string="$(adb shell settings get global device_name)"
 cleanname=$(echo "$string" | tr -d '[:space:]')
 echo "device is"
 echo "$cleanname"
+# Reset BASH time counter
 SECONDS=0
 echo "total user files backup"
 drivers=$(ls /mnt/)
