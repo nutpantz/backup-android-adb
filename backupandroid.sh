@@ -1,10 +1,14 @@
 #!/bin/bash
 clear
 adb start-server
-export PATH="$PATH:/home/user/android/platform-tools"
-echo $PATH
+export PATH="$PATH:/home/nutz/android/platform-tools"
+#echo $PATH
+echo " This is NOT idiot proof, you need to know how much space you need for your backup"
+echo "You need to know where you are backing up stuff"
+sleep 3
 #### varibiles set
 time_stamp=$(date +%Y_%m_%d)
+user1="$USER"
 #######looop
 ######y or n function
 ynkey() { 
@@ -29,6 +33,12 @@ ynkey  # you pressed not y or n goto back to start
 ;;
 esac
 }  # this is the end of the "ynkey" function
+################################
+###########check time function
+timecheck(){
+time=$SECONDS
+printf '%dh:%dm:%ds' $(($time/3600)) $(($time%3600/60)) $(($time%60))
+}
 
 ###########
 adb devices
@@ -37,12 +47,13 @@ adb devices
 string="$(adb shell settings get global device_name)"
 #echo "$string"
 cleanname=$(echo "$string" | tr -d '[:space:]')
-echo "device is"
-echo "$cleanname"
+echo "user is --- $user1 ---"
+echo "device is --- $cleanname ---"
+
 # Reset BASH time counter
 SECONDS=0
 echo "total user files backup"
-drivers=$(ls /mnt/)
+drivers=$(ls /media/$user1)
 
 declare -i c=0
 for word in $drivers
@@ -59,12 +70,24 @@ for word in $drivers
 do
     if [ $c -eq $drive ]
     then
-        backuppath="/mnt/$word/backup"
+        backuppath="/media/$user1/$word/backup"
     fi
     c=c+1
 done
+###check if path exists, if nt make it
+dir="$backuppath"
+
+if [ -d "$dir" ]; then
+    printf 'directory found\n'
+    sleep 3
+else
+    printf 'directory missing making it \n'
+    mkdir -p "${backuppath}"
+    sleep 3
+fi
+### done that
 free1=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free1" ;echo "  free. is that enough???"
+echo -n "$free1" ;echo "  free. continuing"
 echo "${backuppath}/${cleanname}/${time_stamp}"
 echo "doing back up to $backuppath  look good?"
 
@@ -85,31 +108,40 @@ backup(){
 # backup is the function and "download" becomes ${1} varabile
 backup "Download"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "Mobilism/Mobilism-downloads"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "zonewalker-acar"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "MyLogs"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "Pictures"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+echo -n "$free" ;echo "  free. continuing"
+timecheck
 backup "1keep"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+echo -n "$free" ;echo "  free. continuing"
+timecheck
 backup "DCIM"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+echo -n "$free" ;echo "  free. continuing"
+timecheck
 backup "Diary"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+echo -n "$free" ;echo "  free. continuing"
+timecheck
 backup "Documents"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. is that enough???"
+echo -n "$free" ;echo "  free. continuing"
+timecheck
 #backup "Documents/Maps"
 #backup "Documents/tombo25"
 #backup "Documents/apkbackup"
@@ -132,11 +164,7 @@ echo -n "$free" ;echo "  free. is that enough???"
 
 #seconds=$SECONDS
 #ELAPSED="Elapsed: $(($seconds / 3600))hrs $((($seconds / 60) % 60))min $(($seconds % 60))sec"
-time=$SECONDS
-#printf '%dh:%dm:%ds\n' $(($time/3600)) $(($time%3600/60)) $(($time%60))
-printf '%dh:%dm:%ds\n' $(($time/3600)) $(($time%3600/60)) $(($time%60))
-used=$((free1-$free2))
-echo "you used up" ; echo -n $"used" 
+timecheck
 read -p "all done now? (y/n) " yn
 if [[ $yn == [nN] ]]; then
         echo "ending now"
