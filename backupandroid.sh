@@ -124,22 +124,23 @@ timecheck
 echo -n "$free" ;echo "  free. continuing"
 backup "Pictures"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. continuing"
 timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "1keep"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. continuing"
 timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "DCIM"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. continuing"
 timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "Diary"
 free=$(df --output=avail -H $backuppath | tail -n 1)
-echo -n "$free" ;echo "  free. continuing"
 timecheck
+echo -n "$free" ;echo "  free. continuing"
 backup "Documents"
 free=$(df --output=avail -H $backuppath | tail -n 1)
+timecheck
 echo -n "$free" ;echo "  free. continuing"
 timecheck
 #backup "Documents/Maps"
